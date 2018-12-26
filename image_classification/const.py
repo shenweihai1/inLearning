@@ -20,6 +20,7 @@ CLASS_NAMES = ['T-shirt/top',
                'Bag',
                'Ankle boot']
 
+# the iterating times
 ITERATIONS = 100
 
 # config
@@ -60,4 +61,5 @@ config05 = {
     "epsilon": 1e-8
 }
 
+# change it to use different descent algorithms
 CONFIG = config01
