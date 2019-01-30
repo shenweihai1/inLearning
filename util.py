@@ -128,7 +128,7 @@ def shuffle_values(num):
 
 def get_shuffle_values_60000():
     import json
-    with open("60000.json") as reader:
+    with open("dataset/60000.json") as reader:
         lines = reader.readlines()
         line = lines[0]
         return json.loads(line)
@@ -136,7 +136,7 @@ def get_shuffle_values_60000():
 
 def get_shuffle_values_10000():
     import json
-    with open("10000.json") as reader:
+    with open("dataset/10000.json") as reader:
         lines = reader.readlines()
         line = lines[0]
         return json.loads(line)
@@ -170,11 +170,11 @@ if __name__ == "__main__":
 
     # shuffle
     # shuffle_values(10000)
-    # ac = get_shuffle_values_60000()
-    # print(ac)
-    plot_by_file_names(["./plots_data/loss_adam_(iteration:200).dat",
-                        "./plots_data/loss_momentum_(iteration:200).dat",
-                        "./plots_data/loss_nesterov_(iteration:200).dat",
-                        "./plots_data/loss_no_momentum_(iteration:200).dat",
-                        "./plots_data/loss_rmsprop_(iteration:200).dat",
-                        ])
+    ac = get_shuffle_values_60000()
+    print(ac)
+    #plot_by_file_names(["./plots_data/loss_adam_(iteration:200).dat",
+    #                    "./plots_data/loss_momentum_(iteration:200).dat",
+    #                    "./plots_data/loss_nesterov_(iteration:200).dat",
+    #                    "./plots_data/loss_no_momentum_(iteration:200).dat",
+    #                    "./plots_data/loss_rmsprop_(iteration:200).dat",
+    #                    ])
