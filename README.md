@@ -1,3 +1,6 @@
+#### accuracy
+
+#### loss curve 
 ![x](https://raw.githubusercontent.com/shenweihai1/imageUrlService/master/inlearning/loss.png)
 #### NO_MOMENTUM
 ![x](https://raw.githubusercontent.com/shenweihai1/imageUrlService/master/inlearning/config01.png)
