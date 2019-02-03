@@ -3,7 +3,13 @@ In this project, we implement a 3-layer fully-connected neural network to classi
 
 ### Usage
 Run `starter.py` as:
-`python starter.py`
+```
+python starter.py
+```
+try to repalce variable `ITERATIONS` in `./const.py` with different iterations
+
+try to repalce variable `CONFIG` in `./const.py` with different variable `config01 ~ config05` to experience different algorithm
+
 
 ### Training Result
 #### Accuracy
