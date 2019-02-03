@@ -1,5 +1,6 @@
 ### Gradient Descent Optimization
-In this project, we implement a 3-layer fully-connected neural network to classify the fashion-MNIST dataset using No Momentum, Polyak’s classical momentum, Nesterov’s Accelerated Gradient, RmsProp and ADAM algorithms
+In this project, we implement a 3-layer fully-connected neural network(without any deep learning libraries like [TensorFlow](https://www.tensorflow.org/tutorials/keras/basic_classification), Keras,
+MatConvNet etc.) to classify the fashion-MNIST dataset using No Momentum, Polyak’s classical momentum, Nesterov’s Accelerated Gradient, RmsProp and ADAM algorithms
 
 ### Neural network structure for the experiments
 ![x](https://raw.githubusercontent.com/shenweihai1/imageUrlService/master/inlearning/exp.png)
