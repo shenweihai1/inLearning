@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import datetime
 
 # https://www.tensorflow.org/tutorials/keras/basic_classification 
-
 from const import (
     NO_MOMENTUM,
     MOMENTUM,
@@ -28,7 +27,7 @@ class Starter(object):
     activation function: sigmoid, sigmoid, softmax
     loss function: crossentropy
     """
-    def __init__(self, train_images, train_labels, iterations=1000, config={}, layer1=500, layer2=100):
+    def __init__(self, train_images, train_labels, iterations=1000, config={}, layer1=500, layer2=100, N=60000, M=10000):
         self.w_train_images = train_images
         self.w_train_labels = train_labels
         self.train_images = None
@@ -37,7 +36,6 @@ class Starter(object):
         self.gradient = Gradient(config)
         self.layer1 = layer1
         self.layer2 = layer2
-        # for plots
         self.accs_train = []
         self.loss = []
         self.result = []
@@ -165,7 +163,7 @@ class Starter(object):
         parameters = self.init_parameters()
         for ii in range(self.iterations):
             pre_idx = 0
-            for index in range(100, 60000, 1000):
+            for index in range(100, N, 1000):
                 self.train_images = self.w_train_images[:, pre_idx:index]
                 self.train_labels = self.w_train_labels[:, pre_idx:index]
                 pre_idx = index
@@ -183,8 +181,8 @@ class Starter(object):
         return parameters
 
 
-def shuffle_values(inputs, num):
-    values = util.get_shuffle_values_60000() if num == 60000 else util.get_shuffle_values_10000()
+def shuffle(inputs, num):
+    values = util.get_shuffle_values(int(num))
     ans = np.ndarray(shape=inputs.shape)
     for idx in range(num):
         ans[idx] = inputs[values[idx]]
@@ -192,41 +190,46 @@ def shuffle_values(inputs, num):
 
 
 if __name__ == "__main__":
-    (train_images, train_labels), (test_images, test_labels) = util.load_data()
+    print("start loading the data...")
+    train_images, train_labels, test_images, test_labels = util.load_data()
+
+    # for test
+    train_images, train_labels, test_images, test_labels = train_images[:10000], train_labels[:10000], test_images, test_labels
+    ITERATIONS = 10
+
+    util.plot_origin_image(5, 5, train_images, train_labels)  # plot original images
+    print("start proprocessing the data...")
     train_images = train_images / 255.0
     test_images = test_images / 255.0
-    # shuffle the data
-    train_images = shuffle_values(train_images, 60000)
-    train_labels = shuffle_values(train_labels, 60000)
-    test_images = shuffle_values(test_images, 10000)
-    test_labels = shuffle_values(test_labels, 10000)
 
-    transform_train_images = train_images.reshape((len(train_images), 28 * 28)).astype(float)
-    transform_test_images = test_images.reshape((len(test_images), 28 * 28)).astype(float)
-    transform_train_images = transform_train_images.T
-    transform_test_images = transform_test_images.T
-    transform_train_labels = train_labels.reshape((len(train_labels), 1)).T
-    transform_test_labels = test_labels.reshape((len(test_labels), 1)).T
+    N = train_images.__len__()  # length of train dataset 
+    M = test_images.__len__()  # length of test dataset
 
-    obj = Starter(train_images=transform_train_images,
-                  train_labels=transform_train_labels,
+    train_images, train_labels, test_images, test_labels = shuffle(train_images, N), shuffle(train_labels, N), shuffle(test_images, M), shuffle(test_labels, M)
+
+    t_train_images = train_images.reshape((N, 28 * 28)).astype(float).T
+    t_test_images = test_images.reshape((M, 28 * 28)).astype(float).T
+    t_train_labels = train_labels.reshape((N, 1)).T
+    t_test_labels = test_labels.reshape((M, 1)).T
+
+    print("start training the data...")
+    obj = Starter(train_images=t_train_images,
+                  train_labels=t_train_labels,
                   iterations=ITERATIONS,
-                  config=CONFIG)
+                  config=CONFIG,
+                  N = N,
+                  M = M)
     parameters = obj.train()
+    print("end training the data...")
 
-    predictions, cache = Starter.forward_propagation(transform_test_images, parameters)
-    accuracy = obj.get_accuracy_rate(predictions, transform_test_labels)
-    rx = "test data set accuracy: %s" % accuracy
-    print(rx)
-    obj.result.append(rx)
+    predictions, cache = Starter.forward_propagation(t_test_images, parameters)
+    accuracy = obj.get_accuracy_rate(predictions, t_test_labels)
+    logs = "test data set accuracy: %s" % accuracy
+    print(logs)
+    obj.result.append(logs)
 
-    # ########################### plot test image
-    # figure 1
-    util.plot_origin_image(5, 5, train_images, train_labels)
-
-    # figure 2
-    num_rows = 5
-    num_cols = 3
+    # first 15 images with predictions
+    num_rows, num_cols = 5, 3
     num_images = num_rows * num_cols
     plt.figure(figsize=(2 * 2 * num_cols, 2 * num_rows))
     for i in range(num_images):
@@ -236,7 +239,6 @@ if __name__ == "__main__":
         util.plot_value_array(i, predictions, test_labels)
     plt.show()
 
-    # figure 3
     # plot the accuracy curve
     x, y = [], []
     for idx, values in enumerate(obj.accs_train):
@@ -250,7 +252,6 @@ if __name__ == "__main__":
     plt.ylabel('accuracy %')
     plt.show()
 
-    # figure 4
     # plot the loss curve
     x, y = [], []
     for idx, values in enumerate(obj.loss):
@@ -264,6 +265,7 @@ if __name__ == "__main__":
     plt.ylabel('loss')
     plt.show()
 
+    # writing the corresponding log data into files
     with open("./plots_data/loss_%s_(iteration:%s).dat" % (CONFIG['name'].lower(), ITERATIONS), "w+") as writer:
         writer.write(json.dumps({"line_name": CONFIG['name'].lower(), "values": obj.loss}))
 
