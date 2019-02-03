@@ -1,6 +1,9 @@
 ### Gradient Descent Optimization
 In this project, we implement a 3-layer fully-connected neural network to classify the fashion-MNIST dataset using No Momentum, Polyak’s classical momentum, Nesterov’s Accelerated Gradient, RmsProp and ADAM algorithms
 
+### Neural network structure for the experiments
+![x](https://raw.githubusercontent.com/shenweihai1/imageUrlService/master/inlearning/exp.png)
+
 ### Usage
 Run `starter.py` as:
 ```
@@ -15,9 +18,6 @@ try to repalce variable CONFIG with different variable config01 ~ config05 to ex
 ### Training Result
 #### Accuracy
 ![x](https://raw.githubusercontent.com/shenweihai1/imageUrlService/master/inlearning/acc.png)
-#### Neural network structure for the experiments
-![x](https://raw.githubusercontent.com/shenweihai1/imageUrlService/master/inlearning/exp.png)
-
 #### Loss curve
 ![x](https://raw.githubusercontent.com/shenweihai1/imageUrlService/master/inlearning/loss.png)
 #### Predictions using NO_MOMENTUM
