@@ -194,8 +194,8 @@ if __name__ == "__main__":
     train_images, train_labels, test_images, test_labels = util.load_data()
 
     # for test
-    train_images, train_labels, test_images, test_labels = train_images[:10000], train_labels[:10000], test_images, test_labels
-    ITERATIONS = 10
+    # train_images, train_labels, test_images, test_labels = train_images[:10000], train_labels[:10000], test_images, test_labels
+    # ITERATIONS = 10
 
     util.plot_origin_image(5, 5, train_images, train_labels)  # plot original images
     print("start proprocessing the data...")
