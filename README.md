@@ -21,14 +21,4 @@ try to repalce variable CONFIG with different variable config01 ~ config05 to ex
 ![x](https://raw.githubusercontent.com/shenweihai1/imageUrlService/master/inlearning/acc.png)
 #### Loss curve
 ![x](https://raw.githubusercontent.com/shenweihai1/imageUrlService/master/inlearning/loss.png)
-#### Predictions using NO_MOMENTUM
-![x](https://raw.githubusercontent.com/shenweihai1/imageUrlService/master/inlearning/config01.png)
-#### Predictions using MOMENTUM
-![x](https://raw.githubusercontent.com/shenweihai1/imageUrlService/master/inlearning/config02.png)
-#### Predictions using NESTEROV
-![x](https://raw.githubusercontent.com/shenweihai1/imageUrlService/master/inlearning/config03.png)
-#### Predictions using RMSPROP
-![x](https://raw.githubusercontent.com/shenweihai1/imageUrlService/master/inlearning/config04.png)
-#### Predictions using ADAM
-![x](https://raw.githubusercontent.com/shenweihai1/imageUrlService/master/inlearning/config05.png)
 
