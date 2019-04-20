@@ -1,11 +1,10 @@
 ## Fine-tune models
-### fine\_tune.ipynb includes
-1. implementations of transition
-2. test on the new model
+### fine\_tune.ipynb
+1. implementations of transition from one dataset to another dataset
+2. usage on the new model
 
-### bash.ipynb includes 
+### bash.ipynb
 1. python command to fine-tune the model
 
 ### finetuned\_lm 
-new models
-
+Download Link: https://drive.google.com/open?id=1zcJ_6pm-cUMdoJ3ZwGxVx4iv_zSukPkU
