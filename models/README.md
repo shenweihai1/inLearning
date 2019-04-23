@@ -31,6 +31,6 @@ For instance, original sentence is **"Tommy glided across the marble floor with 
 ### feature_extract.py
 this script extract the corresponing features from pre-processed text corpus using fine tuned bert model. The filename as in format `'output/corpus_*_*.txt'`. For example, 'corpus_train_true.txt' contains all the statements with true answers of train set. specify the dataset by change the value of 'par' variable.  the finename of pretrained model is called `'pretrained_hacked.model'`
 
-### 
+### classifier.py
 
 
