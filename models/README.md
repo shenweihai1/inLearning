@@ -1,10 +1,9 @@
 ## Fine-tune models
 ### fine\_tune.ipynb
 1. convert the `train.json` into the format described below for fine-tuning. In this case, we put back the correct answer into the question, then split this question with correct answer into two sentence, first sentence as the first line, second sentence put in the second line. please refer to the [lm_finetuning](https://github.com/huggingface/pytorch-pretrained-BERT/tree/master/examples/lm_finetuning)
-2. all the code based on library: https://github.com/huggingface/pytorch-pretrained-BERT
 
 ### fine-tune-bash.ipynb
-1. Simple fine-tune 
+1. Simple fine-tune, code can be found https://github.com/huggingface/pytorch-pretrained-BERT
 ```
 python examples/lm_finetuning/simple_lm_finetuning.py 
     --train_batch_size 2 
