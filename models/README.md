@@ -6,11 +6,10 @@
 1. Simple fine-tune, code can be found https://github.com/huggingface/pytorch-pretrained-BERT
 ```
 python examples/lm_finetuning/simple_lm_finetuning.py 
-    --train_batch_size 2 
+    --train_batch_size 32 
     --train_corpus 
     ../corpus.txt 
-    --bert_model 
-    bert-base-uncased 
+    --bert_model bert-base-uncased 
     --output_dir finetuned_lm 
     --do_train 
 ```
