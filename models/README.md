@@ -1,10 +1,12 @@
 ## Fine-tune models
 ### fine\_tune.ipynb
-1. implementations of transition from one dataset to another dataset
-2. usage on the new model
+implementations of transition from one dataset to another formatted dataset
 
-### bash.ipynb
-1. python command to fine-tune the model
+### fine-tune-bash.ipynb
+python command to fine-tune the model
+
+### base_line.ipynb
+using bert to predict the next sentence with pre-trained model `bert-base-uncased` to get a base_line accuracy
 
 ### finetuned\_lm 
 Download Link: https://drive.google.com/open?id=1zcJ_6pm-cUMdoJ3ZwGxVx4iv_zSukPkU
