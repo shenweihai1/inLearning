@@ -32,5 +32,8 @@ For instance, original sentence is **"Tommy glided across the marble floor with 
 this script extract the corresponing features from pre-processed text corpus using fine tuned bert model. The filename as in format `'output/corpus_*_*.txt'`. For example, 'corpus_train_true.txt' contains all the statements with true answers of train set. specify the dataset by change the value of 'par' variable.  the finename of pretrained model is called `'pretrained_hacked.model'`
 
 ### classifier.py
-
-
+This script uses tensorflow to build a Neural Network model to classify the output sample from feature.py. Generally speaking, this a text binary classification task.
+1. Prepare the data
+As the input to the neural network model should be in the same lengthy, in function getMatrix we padded the shorter sentence with 0 to standardize the lengths.
+2. Neural Network model
+We used a neural network model with a sequential structure to do the classification. With the neural network model, for each input sentence, we can get a probability on the confidence if this is a statement with correct answer. The structure of the neural network model is `Dense - Batch Normalization - tanh - Dense - Batch Normalization - tanh - softmax - binary cross entropy loss`. We used `Adam` to optimizations the model on batches.
