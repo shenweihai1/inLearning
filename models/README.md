@@ -23,7 +23,7 @@ For instance, original sentence is **"Tommy glided across the marble floor with 
 3. accuracy on dev is `55.4 %`, on test is `53.3 %` using pre-trained model `bert-base-uncased`
 
 ### feature_extract.py
-this script extract the corresponing features from pre-processed text corpus using fine tuned bert model. The filename as in format `'output/corpus_*_*.txt'`. For example, 'corpus_train_true.txt' contains all the statements with true answers of train set. specify the dataset by change the value of 'par' variable.  the finename of pretrained model is called `'pretrained_hacked.model'`
+this script extract the corresponing features from pre-processed text corpus using fine tuned bert model. The filename as in format `'data/corpus_*_*.txt'`. For example, 'corpus_train_true.txt' contains all the statements with true answers of train set. specify the dataset by change the value of 'par' variable.  the finename of pretrained model is called `'pretrained_hacked.model'`
 
 ### classifier.py
 This script uses tensorflow to build a Neural Network model to classify the output sample from feature.py. Generally speaking, this a text binary classification task.
