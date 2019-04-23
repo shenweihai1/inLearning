@@ -1,7 +1,6 @@
 ## Fine-tune models
 ### fine\_tune.ipynb
 implementations of transition from one dataset to another formatted dataset for fine-tuning
-#### procedure
 1. convert the `train.json` into the format described below. In this case, we put back the correct answer into the question, then split this question with correct answer into two sentence, first sentence as the first line, second sentence put in the second line. please refer to the [lm_finetuning](https://github.com/huggingface/pytorch-pretrained-BERT/tree/master/examples/lm_finetuning)
 2. all the code based on library: https://github.com/huggingface/pytorch-pretrained-BERT
 
@@ -22,7 +21,6 @@ python examples/lm_finetuning/simple_lm_finetuning.py
 
 ### base_line.ipynb
 using bert to predict the next sentence with pre-trained model `bert-base-uncased` to get a base_line accuracy
-#### Procedure
 1. convert the `dev.json` to four sentences: (question, correct answer), (question, wrong answer). 
 For instance, original sentence is **"Tommy glided across the marble floor with ease, but slipped and fell on the wet floor because `_____` has more resistance. (A) marble floor (B) wet floor"** where correct answer is wet floor. We can convert this sentenct into: (**"Tommy glided across the marble floor with ease, but slipped and fell on the wet floor because `_____` has more resistance."**, **"wet floor"**), (**"Tommy glided across the marble floor with ease, but slipped and fell on the wet floor because `_____` has more resistance."**, **"marble floor"**)
 2. using bert to predict the next sentence. In this case, we use correct and wrong answer as the next sentence to get confidence separately, pick up the higer one as the predicted answer.
