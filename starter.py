@@ -28,7 +28,7 @@ def get_config(optimizer):
         return {
             "type": ADAM,
             "name": "ADAM",
-            "learning_rate": 0.01,
+            "learning_rate": 0.001,  # Adam needs lower lr (0.001-0.01 typical)
             "beta1": 0.9,
             "beta2": 0.999,
             "epsilon": 1e-8

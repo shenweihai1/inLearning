@@ -1,27 +1,17 @@
 # Neural Network from Scratch: Gradient Descent Optimization
 
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-Neural networks implemented **from scratch without any deep learning libraries** (TensorFlow, Keras, PyTorch, etc.) to classify the Fashion-MNIST dataset. This project includes both a **fully-connected network** and a **Convolutional Neural Network (CNN)** achieving **95%+ accuracy**.
-
+A fully-connected neural network implemented **from scratch without any deep learning libraries** (TensorFlow, Keras, PyTorch, etc.) to classify the Fashion-MNIST dataset.
 
 ## Features
 
 - Pure NumPy implementation - **no deep learning frameworks**
-- **Two network architectures:**
-  - Fully-connected network
-  - CNN
 - Two gradient descent optimization algorithms:
   - Vanilla Gradient Descent (No Momentum)
-  - Adam (recommended)
-- CNN components implemented from scratch:
-  - Conv2D with im2col optimization
-  - MaxPooling
-  - Batch Normalization
-  - Dropout
-  - Flatten
+  - Adam
 - Fashion-MNIST dataset classification (10 clothing categories)
+- Training visualization with accuracy and loss curves
 
 ## Installation
 
@@ -32,7 +22,7 @@ cd inLearning
 
 # Create virtual environment (recommended)
 python -m venv venv
-source venv/bin/activate 
+source venv/bin/activate
 
 # Install dependencies
 pip install numpy scipy matplotlib
@@ -53,37 +43,21 @@ Download from: [Fashion-MNIST GitHub](https://github.com/zalandoresearch/fashion
 
 ## Quick Start
 
-### Configuration
-
-Use command-line arguments to customize training:
-
-**Fully-Connected Network:**
 ```bash
-# Train with Adam optimizer (default)
-python starter.py --optimizer adam --iterations 50
-
-# Train with Vanilla gradient descent
+# Train with Vanilla gradient descent (recommended)
 python starter.py --optimizer vanilla --iterations 50
 
-# Plot saved results without training (Adam)
-python starter.py --optimizer adam --iterations 50 --plot-only
-
-# Plot saved results without training (Vanilla)
-python starter.py --optimizer vanilla --iterations 50 --plot-only
-```
-
-**CNN:**
-```bash
-# Train CNN
-python cnn_starter.py --epochs 30
+# Train with Adam optimizer
+python starter.py --optimizer adam --iterations 150
 
 # Plot saved results without training
-python cnn_starter.py --plot-only
+python starter.py --optimizer vanilla --iterations 50 --plot-only
+
+# Plot saved results without training
+python starter.py --optimizer adam --iterations 150 --plot-only
 ```
 
-## Implementation Details
-
-### Fully Connected Network
+## Network Architecture
 
 ```
 Input (784) → Dense(1024) → ReLU → Dropout → Dense(256) → ReLU → Dropout → Dense(10) → Softmax
@@ -96,57 +70,22 @@ Input (784) → Dense(1024) → ReLU → Dropout → Dense(256) → ReLU → Dro
 | Hidden 2 | 256 | ReLU + Dropout | W2: 256×1024, b2: 256×1 |
 | Output | 10 | Softmax | W3: 10×256, b3: 10×1 |
 
-**Total Parameters:** 1,068,810 (~1.07M) | **Accuracy:** ~89-91%
-
-### CNN Architecture (95%+ Accuracy)
-
-```
-Input (1, 28, 28)
-    │
-    ├── Conv2D(32, 3×3, pad=1) → BatchNorm → ReLU
-    ├── Conv2D(32, 3×3, pad=1) → BatchNorm → ReLU
-    ├── MaxPool(2×2)                                    → (32, 14, 14)
-    │
-    ├── Conv2D(64, 3×3, pad=1) → BatchNorm → ReLU
-    ├── Conv2D(64, 3×3, pad=1) → BatchNorm → ReLU
-    ├── MaxPool(2×2)                                    → (64, 7, 7)
-    │
-    ├── Flatten                                         → (3136,)
-    ├── Dense(256) → BatchNorm → ReLU → Dropout(0.5)
-    └── Dense(10) → Softmax                             → (10,)
-```
-
-| Component | Details | Parameters |
-|-----------|---------|------------|
-| Conv1 | 32 filters, 3×3, pad=1 | 320 |
-| Conv2 | 32 filters, 3×3, pad=1 | 9,248 |
-| Conv3 | 64 filters, 3×3, pad=1 | 18,496 |
-| Conv4 | 64 filters, 3×3, pad=1 | 36,928 |
-| BatchNorm (×5) | Conv + FC layers | 768 |
-| FC1 | 3136 → 256 | 803,072 |
-| FC2 | 256 → 10 | 2,570 |
-| **Total** | | **871,402** |
-
-| Setting | Value |
-|---------|-------|
-| Kernel Size | 3×3 with padding=1 |
-| Pooling | MaxPool 2×2, stride 2 |
-| Regularization | BatchNorm + Dropout(0.5) |
-| Optimizer | Adam (lr=0.001) |
+**Total Parameters:** 1,068,810 (~1.07M)
 
 ## Performance Benchmarks
 
+| Optimizer | Learning Rate | Iterations | Train Acc | Test Acc | Gap |
+|-----------|---------------|------------|-----------|----------|-----|
+| Vanilla | 0.1 | 50 | 90.7% | 88.19% | 2.5% |
+| **Adam** | 0.001 | 150 | 97.0% | **89.43%** | 7.6% |
+
+**Note:** Adam shows overfitting (7.6% gap). Possible fixes: fewer iterations, lower dropout (0.7), or add L2 regularization.
 
 ## References
 
-### Papers
 - [Adam: A Method for Stochastic Optimization](https://arxiv.org/abs/1412.6980) - Kingma & Ba, 2014
-
-### Online Resources
 - [Fashion-MNIST Dataset](https://github.com/zalandoresearch/fashion-mnist)
 - [An Overview of Gradient Descent Optimization Algorithms](https://ruder.io/optimizing-gradient-descent/)
-- [CS231n: Convolutional Neural Networks for Visual Recognition](http://cs231n.stanford.edu/)
-- [Neural Networks and Deep Learning](http://neuralnetworksanddeeplearning.com/)
 
 ## License
 
