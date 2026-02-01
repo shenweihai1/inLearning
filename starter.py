@@ -1,4 +1,14 @@
 #!/usr/bin/env python
+"""
+Fully-Connected Neural Network for Fashion-MNIST Classification
+
+This script trains a 3-layer neural network from scratch using NumPy.
+No deep learning frameworks (TensorFlow, PyTorch) are used.
+
+Architecture: Input(784) -> Dense(1024) -> ReLU -> Dropout -> Dense(256) -> ReLU -> Dropout -> Dense(10) -> Softmax
+Loss: Cross-entropy
+Optimizers: Vanilla GD or Adam
+"""
 import argparse
 import util
 import numpy as np
@@ -42,6 +52,18 @@ def get_config(optimizer):
 # https://www.tensorflow.org/tutorials/keras/basic_classification
 class Starter(object):
     """
+    3-Layer Fully-Connected Neural Network
+
+    Architecture:
+        Layer 1: 784 -> 1024 (ReLU + Dropout)
+        Layer 2: 1024 -> 256 (ReLU + Dropout)
+        Layer 3: 256 -> 10 (Softmax)
+
+    Why ReLU? Avoids vanishing gradient problem, faster than sigmoid/tanh.
+    Why Dropout? Prevents overfitting by randomly dropping neurons during training.
+    Why Softmax? Outputs probability distribution over 10 classes.
+    Why Cross-entropy? Standard loss for multi-class classification.
+
     hidden nodes: 500, 100, last layer nodes: 10
     activation function: ReLU, ReLU, softmax
     loss function: crossentropy
@@ -61,8 +83,17 @@ class Starter(object):
         self.keep_prob = keep_prob  # Dropout probability
 
     def init_parameters(self):
-        np.random.seed(0)
-        # He initialization for ReLU: sqrt(2/n) where n is the input size
+        """
+        Initialize weights using He initialization (best for ReLU).
+
+        Why He initialization?
+        - Random init with small values (e.g., 0.01) causes vanishing gradients
+        - Random init with large values causes exploding gradients
+        - He init (sqrt(2/n)) keeps variance stable across layers with ReLU
+
+        Biases initialized to zero (standard practice).
+        """
+        np.random.seed(0)  # For reproducibility
         return {
             "W1": np.random.randn(self.layer1, 784) * np.sqrt(2.0 / 784),
             "b1": np.zeros((self.layer1, 1)),
@@ -74,6 +105,14 @@ class Starter(object):
 
     @staticmethod
     def forward_propagation(X, parameters, keep_prob=1.0, training=False):
+        """
+        Forward pass: Input -> Hidden1 -> Hidden2 -> Output
+
+        Z = W * X + b           (linear transformation)
+        A = activation(Z)       (non-linear activation)
+
+        Dropout is only applied during training (not inference).
+        """
         W1 = parameters["W1"]
         b1 = parameters["b1"]
         W2 = parameters["W2"]
@@ -81,18 +120,21 @@ class Starter(object):
         W3 = parameters["W3"]
         b3 = parameters["b3"]
 
+        # Layer 1: Linear -> ReLU -> Dropout
         Z1 = np.dot(W1, X) + b1
         A1 = util.relu(Z1)
         D1 = None
         if training and keep_prob < 1.0:
             A1, D1 = util.dropout(A1, keep_prob)
 
+        # Layer 2: Linear -> ReLU -> Dropout
         Z2 = np.dot(W2, A1) + b2
         A2 = util.relu(Z2)
         D2 = None
         if training and keep_prob < 1.0:
             A2, D2 = util.dropout(A2, keep_prob)
 
+        # Layer 3: Linear -> Softmax (no dropout on output layer)
         Z3 = np.dot(W3, A2) + b3
         A3 = util.softmax(Z3)
 
@@ -127,9 +169,22 @@ class Starter(object):
         return dZ/m
 
     def backward_propagation(self, parameters, cache):
-        # https://github.com/andersy005/deep-learning-specialization-coursera/blob/master/02-Improving-Deep-Neural-Networks/week1/Programming-Assignments/Regularization/reg_utils.py
-        # https://www.tensorflow.org/tutorials/keras/basic_classification
-        # https://ml-cheatsheet.readthedocs.io/en/latest/loss_functions.html
+        """
+        Backward pass: Compute gradients using chain rule.
+
+        For each layer (working backwards):
+            dL/dW = dL/dZ * dZ/dW = dL/dZ * A_prev.T
+            dL/db = sum(dL/dZ)
+            dL/dA_prev = W.T * dL/dZ
+
+        Dropout masks (D1, D2) are reapplied during backprop to maintain consistency.
+
+        References:
+        - https://github.com/andersy005/deep-learning-specialization-coursera/blob/master/02-Improving-Deep-Neural-Networks/week1/Programming-Assignments/Regularization/reg_utils.py
+        - https://www.tensorflow.org/tutorials/keras/basic_classification
+        - https://ml-cheatsheet.readthedocs.io/en/latest/loss_functions.html
+        """
+        # Output layer gradient: softmax + cross-entropy combined derivative
         dL_Z3 = Starter.softmax_cross_entropy_loss_der(cache['A3'], self.train_labels)
         dW3 = np.dot(dL_Z3, cache['A2'].T)
         db3 = np.sum(dL_Z3, axis=1, keepdims=True)

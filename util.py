@@ -1,4 +1,9 @@
 #!/usr/bin/env python
+"""
+Utility functions for neural network training.
+
+Contains activation functions, loss functions, and data loading utilities.
+"""
 import gzip
 import os
 import json
@@ -10,44 +15,67 @@ from const import CLASS_NAMES
 import matplotlib.pyplot as plt
 
 
+# ============== Activation Functions ==============
+
 # https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.special.expit.html
 def sigmoid(x):
+    """Sigmoid: maps input to (0, 1). Used for binary classification."""
     # return 1.0 / (1.0 + np.exp(-x))
-    return expit(x)
+    return expit(x)  # Numerically stable implementation
 
 
 def sigmoid_der(z):
+    """Sigmoid derivative: sigmoid(z) * (1 - sigmoid(z))"""
     return sigmoid(z)*(1-sigmoid(z))
 
 
 def relu(x):
+    """
+    ReLU: max(0, x). Most popular activation for hidden layers.
+    Pros: Fast, avoids vanishing gradient.
+    Cons: "Dying ReLU" - neurons can permanently output 0.
+    """
     return np.maximum(0, x)
 
 
 def relu_der(z):
+    """ReLU derivative: 1 if z > 0, else 0"""
     return (z > 0).astype(float)
 
 
+# ============== Regularization ==============
+
 def dropout(A, keep_prob):
-    """Apply dropout to activation matrix A during training."""
-    D = np.random.rand(*A.shape) < keep_prob
-    A = np.multiply(A, D)
+    """
+    Dropout: Randomly zero out neurons during training.
+    Prevents overfitting by forcing network to not rely on any single neuron.
+    Scaling by 1/keep_prob ensures expected value stays the same (inverted dropout).
+    """
+    D = np.random.rand(*A.shape) < keep_prob  # Random mask
+    A = np.multiply(A, D)  # Apply mask
     A = A / keep_prob  # Scale to maintain expected value
     return A, D
 
 
 def dropout_backward(dA, D, keep_prob):
-    """Backward pass for dropout."""
+    """Backward pass: apply same mask and scaling."""
     dA = np.multiply(dA, D)
     dA = dA / keep_prob
     return dA
 
 
+# ============== Output & Loss Functions ==============
+
 def softmax(x: np.ndarray) -> np.ndarray:
+    """
+    Softmax: converts logits to probability distribution.
+    Subtracting logsumexp for numerical stability (prevents overflow).
+    """
     return np.exp(x - sc.logsumexp(x, axis=0))
 
 
 def cross_entropy_loss(Z, Y):
+    """Cross-entropy loss: -sum(y * log(softmax(z))). Standard for classification."""
     n, m = Z.shape
     A = np.zeros(Z.shape)
     for i in range(0, m):
