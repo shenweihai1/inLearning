@@ -2,16 +2,7 @@
 
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-A fully-connected neural network implemented **from scratch without any deep learning libraries** (TensorFlow, Keras, PyTorch, etc.) to classify the Fashion-MNIST dataset.
-
-## Features
-
-- Pure NumPy implementation - **no deep learning frameworks**
-- Two gradient descent optimization algorithms:
-  - Vanilla Gradient Descent (No Momentum)
-  - Adam
-- Fashion-MNIST dataset classification (10 clothing categories)
-- Training visualization with accuracy and loss curves
+A fully-connected neural network implemented **from scratch without any deep learning libraries** (TensorFlow, PyTorch, etc.) to classify the Fashion-MNIST dataset.
 
 ## Installation
 
