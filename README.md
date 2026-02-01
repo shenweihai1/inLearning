@@ -8,8 +8,8 @@ A fully-connected neural network implemented **from scratch without any deep lea
 
 ```bash
 # Clone the repository
-git clone https://github.com/shenweihai1/inLearning.git
-cd inLearning
+git clone https://github.com/shenweihai1/gradient-descent-lab.git
+cd gradient-descent-lab 
 
 # Create virtual environment (recommended)
 python -m venv venv
