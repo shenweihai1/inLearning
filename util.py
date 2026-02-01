@@ -20,6 +20,29 @@ def sigmoid_der(z):
     return sigmoid(z)*(1-sigmoid(z))
 
 
+def relu(x):
+    return np.maximum(0, x)
+
+
+def relu_der(z):
+    return (z > 0).astype(float)
+
+
+def dropout(A, keep_prob):
+    """Apply dropout to activation matrix A during training."""
+    D = np.random.rand(*A.shape) < keep_prob
+    A = np.multiply(A, D)
+    A = A / keep_prob  # Scale to maintain expected value
+    return A, D
+
+
+def dropout_backward(dA, D, keep_prob):
+    """Backward pass for dropout."""
+    dA = np.multiply(dA, D)
+    dA = dA / keep_prob
+    return dA
+
+
 def softmax(x: np.ndarray) -> np.ndarray:
     return np.exp(x - sc.logsumexp(x, axis=0))
 

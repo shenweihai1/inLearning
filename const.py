@@ -21,7 +21,7 @@ CLASS_NAMES = ['T-shirt/top',
                'Ankle boot']
 
 # the iterating times
-ITERATIONS = 100
+ITERATIONS = 200
 
 # config
 config01 = {
@@ -62,4 +62,4 @@ config05 = {
 }
 
 # change it to use different descent algorithms
-CONFIG = config01
+CONFIG = config05  # Adam optimizer recommended for best accuracy
